@@ -17,40 +17,51 @@ const Prediction = () => {
 
   // Update state when input changes
   const handleChange = (e) => {
-    setInputs({ ...inputs, [e.target.name]: e.target.value });
+    const value = e.target.value;
+    
+    // Check if the input value is greater than 100
+    if (value > 100) {
+     alert("Input value cannot be greater than 100.");
+    }
+
+    setInputs({ ...inputs, [e.target.name]: value });
   };
 
   const determinePorosity = (inputs) => {
-    let depthPorosity = "";
-    let otherPorosity = "";
+    let porosityResults = [];
 
-    if (inputs.parameter2 >= 1 && inputs.parameter2 <= 50) {
-      depthPorosity = "Medium Porous";
-    } else if (inputs.parameter2 >= 51 && inputs.parameter2 <= 100) {
-      depthPorosity = "Highly Porous";
+    // Define porosity conditions
+    const conditions = [
+      { range: [1, 50], result: "Medium Porous" },
+      { range: [51, 100], result: "Highly Porous" },
+    ];
+
+    // Check depth porosity
+    for (const condition of conditions) {
+      if (inputs.parameter2 >= condition.range[0] && inputs.parameter2 <= condition.range[1]) {
+        porosityResults.push(`Depth: ${condition.result}`);
+        break; // Exit loop once condition is met
+      }
     }
 
-    if (inputs.parameter4 >= 1 && inputs.parameter4 <= 50) {
-      otherPorosity = "Highly Porous";
-    } else if (inputs.parameter4 >= 51 && inputs.parameter4 <= 100) {
-      otherPorosity = "Medium Porous";
+    // Check other porosity
+    for (const condition of conditions) {
+      if (inputs.parameter4 >= condition.range[0] && inputs.parameter4 <= condition.range[1]) {
+        porosityResults.push(`Porosity: ${condition.result}`);
+        break; // Exit loop once condition is met
+      }
     }
 
-    return { depthPorosity, otherPorosity };
+    return porosityResults.join(", ");
   };
 
   // Handle form submission
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const { depthPorosity, otherPorosity } = determinePorosity(inputs);
+    const porosityOutput = determinePorosity(inputs);
 
-    try {
-      const response = await axios.post('/api/predict', inputs);
-      setPrediction(`Depth: ${depthPorosity}, Porosity: ${otherPorosity}`);
-    } catch (error) {
-      setError("Error fetching prediction");
-      console.error("Error:", error.response ? error.response.data : error.message);
-    }
+    // Removed API call
+    setPrediction(porosityOutput); // Update prediction with porosity output
   };
 
   return (
@@ -60,7 +71,7 @@ const Prediction = () => {
         {Object.keys(inputs).map((key) => (
           <div className="form-group" key={key}>
             <label>
-              {`Parameter ${key.charAt(key.length - 1)} (e.g., ${key === 'parameter2' ? 'Depth' : key === 'parameter4' ? 'Porosity' : 'Other'})`}:
+              {`Parameter ${key.charAt(key.length - 1)} (e.g., ${key === 'parameter1' ? 'Pressure':key === 'parameter5' ? 'VOG':key === 'parameter2' ? 'Depth' : key === 'parameter4' ? 'Porosity' : 'Stress level'})`}:
               <input
                 type="number"
                 name={key}
@@ -75,7 +86,7 @@ const Prediction = () => {
         <button type="submit" className="submit-button">Predict</button>
       </form>
 
-      {prediction && <p className="prediction-output">Prediction: {prediction}</p>}
+      {prediction && <p className="prediction-output">{prediction}</p>}
       {error && <p className="error-message">{error}</p>}
     </div>
   );
