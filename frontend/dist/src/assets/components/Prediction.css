@@ -1,0 +1,83 @@
+body {
+    background-image: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0'); 
+    background-size: cover; 
+    background-position: center; 
+    font-family: Arial, sans-serif; 
+    height: 100vh; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+}
+
+.prediction-container {
+    max-width: 800px;
+    margin: 20px; 
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); 
+    background-color: rgba(255, 255, 255, 0.9); 
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+    font-size: 24px; 
+    margin-bottom: 20px; 
+}
+
+.prediction-form {
+    display: flex;
+    width:800px;
+    padding-right: 100px;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: bold;
+    color: #555;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s; 
+}
+
+.form-input:focus {
+    border-color: #28a745; 
+}
+
+.submit-button {
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s; 
+}
+
+.submit-button:hover {
+    background-color: #218838;
+}
+
+.prediction-output {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.error-message {
+    color: red;
+    margin-top: 10px;
+}
