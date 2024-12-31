@@ -3,7 +3,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Introduction from "./assets/components/Introduction"
 import Prediction from "./assets/components/Prediction";
-import ContactUs from "./assets/components/Prediction";
+import ContactUs from "./assets/components/ContactUs";
 
 function App() {
   return (
