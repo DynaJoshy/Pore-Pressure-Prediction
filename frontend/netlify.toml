@@ -1,0 +1,8 @@
+[build]
+  command = "npm run build:all" # Your command to build all directories
+  publish = "frontend/dist"    # Adjust this path according to where your built files are located
+
+[context.production.environment]
+  NODE_VERSION = "14"  # Specify Node.js version if needed
+
+
